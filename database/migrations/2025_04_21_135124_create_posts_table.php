@@ -9,15 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up()
-{
-    Schema::create('posts', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->text('body');
-        $table->timestamps();
-    });
-    
+    public function up(): void
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id('post_id');
+            $table->string('title');
+            $table->text('body');
+            $table->unsignedBIgInteger('user_id');
+            $table->timestamps();
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**

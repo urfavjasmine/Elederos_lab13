@@ -1,23 +1,56 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-    <form method="POST" action="/login" class="bg-white p-10 rounded-2xl shadow-xl w-full max-w-lg">
-        @csrf
-        <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center">Login</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-        <div class="mb-6">
-            <label for="email" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
-            <input name="email" type="email" id="email" placeholder="Enter your email" required
-                class="w-full h-14 px-6 py-4 text-lg border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container-fluid vh-100">
+        <div class="row h-100 align-items-center justify-content-center">
+            <div class="col col-10 col-md-8 col-lg-6">
+                <div class="card p-4 shadow">
+                    <div class="card-title text-center">
+                        <h2>Log in</h2>
+                    </div>
+                    <div class="card-body">
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="idemail" class="form-label">Email</label>
+                                <input id="idemail" class="form-control" name="email" type="email" placeholder="Enter your email" value="{{ old('email') }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="idpassword" class="form-label">Password</label>
+                                <input id="idpassword" class="form-control" name="password" type="password" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Log in</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <p>Don't have an account? <a href="{{ action([App\Http\Controllers\AuthController::class, 'showRegister']) }}">Register here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br>
-        <div class="mb-8">
-            <label for="password" class="block text-lg font-medium text-gray-700 mb-2">Password</label>
-            <input name="password" type="password" id="password" placeholder="Enter your password" required
-                class="w-full h-14 px-6 py-4 text-lg border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <br>
-        <button type="submit"
-            class="w-full bg-blue-600 text-white py-3 text-lg rounded-xl hover:bg-blue-700 transition duration-200">
-            Login
-        </button>
-    </form>
-</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+
+</html>

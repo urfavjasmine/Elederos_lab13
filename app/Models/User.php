@@ -12,6 +12,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,21 +24,6 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
-    public function blogs()
-    {
-        return $this->hasMany(Blog::class, 'user_id', 'id');
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class, 'user_id', 'id');
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class, 'liker_id', 'id');
-    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -59,5 +46,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    // In User.php
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

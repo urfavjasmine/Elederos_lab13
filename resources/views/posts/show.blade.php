@@ -1,16 +1,24 @@
-<?php ?>
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Post</title>
-</head>
+@section('content')
 
-<body>
-    <h1>{{ $post->title }}</h1>
-    <p>{{ $post->body }}</p>
-    <a href="{{ route('posts.index') }}">Back to Posts</a>
+<div class="row h-100 align-items-center justify-content-center">
+    <div class="col col-lg-8 col-md-10 col-sm-12">
+        <div class="card p-5">
+            <div class="text-center mb-4">
+                <h1 class="display-4">{{ $post->title }}</h1>
+                <p class="text-muted">By {{ $post->name }} on {{ $post->created_at->format('F j, Y') }}</p>
+            </div>
 
-</html>
+            <div class="mb-4">
+                <p class="lead">{{ $post->body }}</p>
+            </div>
+
+            <div class="text-center">
+                <a href="{{ route('posts.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i> Back to Posts</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection

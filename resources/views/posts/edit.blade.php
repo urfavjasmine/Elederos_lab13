@@ -1,26 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Post</title>
-</head>
+@section('content')
 
-<body>
-    <h1>Edit Post</h1>
-    <form action="{{ route('posts.update', $post->post_id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <label for="title">Title:</label>
-        <input type="text" name="title" id="title" value="{{ $post->title }}" required>
-        <br>
-        <label for="body">Content:</label>
-        <textarea name="body" id="body" required>{{ $post->body }}</textarea>
-        <br>
-        <button type="submit">Update</button>
-    </form>
-    <a href="{{ route('posts.index') }}">Back to Posts</a>
-</body>
+<div class="row h-100 align-items-center justify-content-center">
+    <div class="col col-lg-8 col-md-10 col-sm-12">
+        <div class="card p-5">
+            <div class="text-center mb-4">
+                <h1>Edit Post</h1>
+            </div>
 
-</html>
+            @if($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $err)
+                    <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
+            <form action="{{ route('posts.update', $post->post_id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                    <label for="idtitle" class="form-label">Title</label>
+                    <input id="idtitle" type="text" name="title" class="form-control" value="{{ old('title', $post->title) }}" placeholder="Enter post title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="idbody" class="form-label">Body</label>
+                    <textarea id="idbody" name="body" class="form-control" rows="5" placeholder="Write your post content here..." required>{{ old('body', $post->body) }}</textarea>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Update</button>
+                    <a href="{{ route('posts.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i> Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
